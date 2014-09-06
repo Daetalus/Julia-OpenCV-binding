@@ -2,7 +2,7 @@
 =====================
 
 **NOTE:**
-This project currently is a **minimal prototype** of Julia-OpenCV binding. I will submit a  GSoC proposal and it will contain the implementation details that I planed.
+This project currently is a **minimal prototype** of Julia-OpenCV binding. It is under development.
 
 How to use it
 ---------
