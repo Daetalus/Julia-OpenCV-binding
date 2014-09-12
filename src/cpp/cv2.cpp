@@ -4,7 +4,7 @@
 
 using namespace std;
 
-Mat* imread(char *filename)
+cv::Mat* imread(char *filename)
 {
     cv::Mat img = cv::imread(filename);
     cv::Mat *image = new Mat();
@@ -13,7 +13,8 @@ Mat* imread(char *filename)
 	return image;
 }
 
-void imshow(char *winName, Mat* mat){
+void imshow(char *winName, Mat* mat)
+{
 	if (!mat->empty())
 	{
 		cv::imshow(winName, *mat);
@@ -28,4 +29,5 @@ void waitKey(int delay)
 {
     cv::waitKey(delay);
 }
+
 

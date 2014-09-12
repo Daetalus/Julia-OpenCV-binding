@@ -6,8 +6,10 @@
 
 using namespace cv;
 
-extern "C" Mat* imread(char *filename);
+
+extern "C" cv::Mat* imread(char *filename);
 extern "C" void imshow(char *winName, Mat *mat);
 extern "C" void waitKey(int delay);
 
-#endif // CV2_H
+#endif 
+// CV2_H
