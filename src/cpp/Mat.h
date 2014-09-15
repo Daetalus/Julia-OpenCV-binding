@@ -36,38 +36,27 @@ extern "C" cv::Mat* createMat8(cv::Mat m, cv::Rect roi);
 extern "C" cv::Mat* adjustROI(cv::Mat *mat, int dtop, int dbottom, int dleft, int dright);
 
 // C++: void Mat::assignTo(Mat m, int type = -1);
-extern "C" void assignTo1(cv::Mat m, int type);
+// Done
+extern "C" void assignTo(cv::Mat *dst, cv::Mat *src, int type);
     
-// javadoc: Mat::assignTo(m);
-extern "C" void assignTo2(cv::Mat m);
-
 // C++: int Mat::channels();
 // Done
 extern "C" int channels(cv::Mat *mat);
-
-// C++: int Mat::checkVector(int elemChannels, int depth = -1, bool
-    
-// requireContinuous = true);
-extern "C" int checkVector1(int elemChannels, int depth, bool requireContinuous);
-    
-// javadoc: Mat::checkVector(elemChannels, depth);
-extern "C" int checkVector2(int elemChannels, int depth);
-    
-// javadoc: Mat::checkVector(elemChannels);
-extern "C" int checkVector3(int elemChannels);
 
 // C++: Mat Mat::clone();
 // Done
 extern "C" cv::Mat* cloneInWrap(cv::Mat *mat);
 
+/*
 // C++: Mat Mat::col(int x);
-extern "C" cv::Mat* col(int x);
+extern "C" cv::Mat* col(cv::Mat *mat, int x);
 
 // C++: Mat Mat::colRange(int startcol, int endcol);
 extern "C" cv::Mat* colRange1(int startcol, int endcol);
 
 // C++: Mat Mat::colRange(Range r);
 extern "C" cv::Mat* colRange2(cv::Range r);
+*/
 
 // C++: int Mat::dims();
 // Done
@@ -78,32 +67,28 @@ extern "C" int dims(cv::Mat* mat);
 extern "C" int cols(cv::Mat *mat);
 
 // C++: Mat::at();
+// Done
 extern "C" int at(cv::Mat *mat, int channel, int i, int j);
 
 // C++: void Mat::convertTo(Mat& m, int rtype, double alpha = 1, double beta
 // = 0);
-extern "C" void convertTo1(cv::Mat m, int rtype, double alpha, double beta);
+// Done
+extern "C" void convertTo(cv::Mat *dst, cv::Mat *src, int rtype, double alpha, double beta);
     
-// javadoc: Mat::convertTo(m, rtype, alpha);
-extern "C" void convertTo2(cv::Mat m, int rtype, double alpha);
-    
-// javadoc: Mat::convertTo(m, rtype);
-extern "C" void convertTo3(cv::Mat m, int rtype);
-
 // C++: void Mat::copyTo(Mat& m);
-extern "C" void copyTo1(cv::Mat m);
+// Done
+extern "C" void copyTo(cv::Mat *dst, cv::Mat *src);
 
 // C++: void Mat::copyTo(Mat& m, Mat mask);
-extern "C" void copyTo2(cv::Mat m, cv::Mat mask);
-
-// C++: void Mat::create(int rows, int cols, int type);
-extern "C" void create1(int rows, int cols, int type);
+// Done
+extern "C" void copyTo2(cv::Mat *dst, cv::Mat *src, cv::Mat* mask);
 
 // C++: void Mat::create(Size size, int type);
+// TODO
 extern "C" void create2(cv::Size size, int type);
 
 // C++: Mat Mat::cross(Mat m);
-extern "C" cv::Mat* cross(cv::Mat m);
+extern "C" cv::Mat* cross(cv::Mat* mat1, cv::Mat *mat2);
 
 // C++: long Mat::dataAddr();
 extern "C" long dataAddr();
@@ -125,36 +110,35 @@ Mat retVal = new Mat(n_diag(d.nativeObj););
 */
 
 // C++: double Mat::dot(Mat m);
-extern "C" double dot(cv::Mat m);
+// TODO, implemented, but could not verify the result
+extern "C" double dot(cv::Mat *mat1, cv::Mat *mat2);
 
 // C++: size_t Mat::elemSize();
-extern "C" long elemSize();
+// Done
+extern "C" long elemSize(cv::Mat *mat);
 
 // C++: size_t Mat::elemSize1();
-extern "C" long elemSize1();
+// Done
+extern "C" long elemSize1(cv::Mat *mat);
 
 // C++: bool Mat::empty();
 // Done
 extern "C" bool empty(cv::Mat *mat);
-/*
 
 // C++: static Mat Mat::eye(int rows, int cols, int type);
-    public static Mat eye(int rows, int cols, int type);
+extern "C" cv::Mat* eye(int rows, int cols, int type);
 
+/*
 // C++: static Mat Mat::eye(Size size, int type);
-javadoc: Mat::eye(size, type);
-    public static Mat eye(Size size, int type);
-Mat retVal = new Mat(n_eye(size.width, size.height, type););
+extern "C" cv::Mat* eye(Size size, int type);
 */
 
 // C++: Mat Mat::inv(int method = DECOMP_LU);
-extern "C" cv::Mat* inv1(int method);
-    
-// javadoc: Mat::inv();
-extern "C" cv::Mat* inv2();
+extern "C" cv::Mat* inv(cv::Mat *mat, int method);
 
 // C++: bool Mat::isContinuous();
-extern "C" bool isContinuous();
+// Done
+extern "C" bool isContinuous(cv::Mat *mat);
 
 // C++: bool Mat::isSubmatrix();
 extern "C" bool isSubmatrix();
@@ -163,34 +147,32 @@ extern "C" bool isSubmatrix();
 extern "C" void locateROI(cv::Size wholeSize, cv::Point ofs);
 
 // C++: Mat Mat::mul(Mat m, double scale = 1);
-extern "C" cv::Mat* mul1(cv::Mat m, double scale);
+extern "C" cv::Mat* mul1(cv::Mat *mat1, cv::Mat *mat2, double scale);
     
 // javadoc: Mat::mul(m);
-extern "C" cv::Mat* mul2(cv::Mat m);
-/*
+extern "C" cv::Mat* mul2(cv::Mat *mat1, cv::Mat *mat2);
 
+/*
 // C++: static Mat Mat::ones(int rows, int cols, int type);
-    public static Mat ones(int rows, int cols, int type);
-Mat retVal = new Mat(n_ones(rows, cols, type););
+extern "C" Mat ones(int rows, int cols, int type);
 
 // C++: static Mat Mat::ones(Size size, int type);
-javadoc: Mat::ones(size, type);
-    public static Mat ones(Size size, int type);
-Mat retVal = new Mat(n_ones(size.width, size.height, type););
+extern "C" Mat ones(Size size, int type);
 */
 
 // C++: void Mat::push_back(Mat m);
 extern "C" void push_back(cv::Mat m);
 
 // C++: void Mat::release();
-extern "C" void release();
+extern "C" void release(cv::Mat *mat);
 
 // C++: Mat Mat::reshape(int cn, int rows = 0);
-extern "C" cv::Mat* reshape1(int cn, int rows);
+extern "C" cv::Mat* reshape1(cv::Mat *mat, int cn, int rows);
     
 // javadoc: Mat::reshape(cn);
-extern "C" cv::Mat* reshape2(int cn);
+extern "C" cv::Mat* reshape2(cv::Mat *mat, int cn);
 
+/*
 // C++: Mat Mat::row(int y);
 extern "C" cv::Mat* row(int y);
 
@@ -199,6 +181,7 @@ extern "C" cv::Mat* rowRange1(int startrow, int endrow);
 
 // C++: Mat Mat::rowRange(Range r);
 extern "C" cv::Mat* rowRange2(cv::Range r);
+*/
 
 // C++: int Mat::rows();
 // Done
@@ -220,10 +203,8 @@ extern "C" cv::Mat* setTo4(cv::Mat value);
     //public Size size();
 
 // C++: size_t Mat::step1(int i = 0);
-extern "C" long step11(int i);
-    
-// javadoc: Mat::step1();
-extern "C" long step12();
+// Done, TODO, need verify
+extern "C" long step1(cv::Mat *mat, int i);
 
 // C++: Mat Mat::operator();(int rowStart, int rowEnd, int colStart, int
     
@@ -237,24 +218,20 @@ extern "C" cv::Mat* submat2(cv::Range rowRange, cv::Range colRange);
 extern "C" cv::Mat* submat3(cv::Rect roi);
 
 // C++: Mat Mat::t();
-extern "C" cv::Mat* t();
+extern "C" cv::Mat* t(cv::Mat *mat);
 
 // C++: size_t Mat::total();
-extern "C" long total();
+// Done
+extern "C" long total(cv::Mat *mat);
 
 // C++: int Mat::type();
-extern "C" int type();
-/*
+// Done
+extern "C" int type(cv::Mat *mat);
 
-// C++: static Mat Mat::zeros(int rows, int cols, int type);
-javadoc: Mat::zeros(rows, cols, type);
-    public static Mat zeros(int rows, int cols, int type);
-Mat retVal = new Mat(n_zeros(rows, cols, type););
 
-// C++: static Mat Mat::zeros(Size size, int type);
-javadoc: Mat::zeros(size, type);
-    public static Mat zeros(Size size, int type);
-Mat retVal = new Mat(n_zeros(size.width, size.height, type););
-*/
+//C++: static Mat Mat::zeros(int rows, int cols, int type);
+// Done
+extern "C" cv::Mat* zeros(int rows, int cols, int type);
+
 #endif 
 // MAT_H
