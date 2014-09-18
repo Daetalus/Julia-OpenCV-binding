@@ -1,3 +1,18 @@
+function split(image::Mat)
+    hnd = ccall( (:split, "../libcv2"), Ptr{Ptr{Void}}, (Ptr{Void},), image.handle)
+    images = pointer_to_array(hnd, 3)
+    imageR = convert(Array{Mat, 1}, images)
+    return imageR
+end
+
+function convert(::Type{Array{Mat, 1}}, ptrArray::Array{Ptr{Void}, 1})
+    matArray = Mat[]
+    for ptr in ptrArray
+        append!(matArray, [Mat(ptr)])
+    end
+    return matArray
+end
+
 function calcHist(images::Array{Mat,},
                   channels::Array{Int, 1},
                   #Null, #mask
@@ -10,21 +25,12 @@ function calcHist(images::Array{Mat,},
     mask = Mat()
 
     imagesPtr = convertMatArray(images)
-    #cv2.imshow("Hist in Julia", Mat(imagesPtr[1]))
-#ranges 用数组是因为为每个图片都设定一个像素显示范围
-    println(string("Ranges: ", ranges[1], " ", ranges[2]))
-    hnd = Mat(ccall( (:calcHist, "../libcv2"),
-              Ptr{Void},
+    hnd = ccall( (:calcHist, "../libcv2"),
+              Ptr{Int},
               (Ptr{Ptr{Void}}, Int, Ptr{Int}, Ptr{Void}, Int, Ptr{Int}, Ptr{Float64}, Bool, Bool),
-              imagesPtr, nimages, channels, mask.handle, dims(images[1]), histSize, ranges, uniform, accumulate))
-    return hnd
-end
-
-function bar(a::Array{Int, 1},
-             b::Array{Float64, 1}
-             )
-            # convert(
-    ccall( (:foo, "../libcv2"), Void, (Ptr{Int}, Ptr{Cdouble}), a, b)
+              imagesPtr, nimages, channels, mask.handle, dims(images[1]), histSize, ranges, uniform, accumulate)
+    hist = pointer_to_array(hnd, histSize[1])
+    return hist
 end
 
 type Point
