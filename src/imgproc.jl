@@ -1,3 +1,4 @@
+import Base.convert
 function split(image::Mat)
     hnd = ccall( (:split, "../libcv2"), Ptr{Ptr{Void}}, (Ptr{Void},), image.handle)
     images = pointer_to_array(hnd, 3)
@@ -13,6 +14,40 @@ function convert(::Type{Array{Mat, 1}}, ptrArray::Array{Ptr{Void}, 1})
     return matArray
 end
 
+function columnStack(x::Array{Int, 1}, y::Array{Int, 1})
+    pts = cv2.Point[]
+    for i = 1:length(x)
+        pt = cv2.Point(x[i], y[i])
+        append!(pts, [pt])
+    end
+    return pts
+end
+
+function normarlizeT(array::Array{Int32, 1})
+        big = array[1]
+        small = array[1]
+
+    for i = 2:length(array)
+        temp = array[i]
+        #println(temp)
+        if temp > big
+            big = temp
+        end
+        if temp < small
+            small = temp
+        end
+    end
+
+    rArray = Int[]
+
+    for i = 1:length(array)
+        append!(rArray, [convert(Int32, round(((array[i] - small)/(big - small))
+        * 255))])
+    end
+
+    return rArray
+end
+
 function calcHist(images::Array{Mat,},
                   channels::Array{Int, 1},
                   #Null, #mask
@@ -21,15 +56,15 @@ function calcHist(images::Array{Mat,},
                   uniform::Bool = true,
                   accumulate::Bool = false)
     nimages = length(images)
-    println(nimages)
     mask = Mat()
 
     imagesPtr = convertMatArray(images)
     hnd = ccall( (:calcHist, "../libcv2"),
-              Ptr{Int},
+              Ptr{Int32},
               (Ptr{Ptr{Void}}, Int, Ptr{Int}, Ptr{Void}, Int, Ptr{Int}, Ptr{Float64}, Bool, Bool),
               imagesPtr, nimages, channels, mask.handle, dims(images[1]), histSize, ranges, uniform, accumulate)
     hist = pointer_to_array(hnd, histSize[1])
+
     return hist
 end
 
@@ -59,11 +94,15 @@ function polylines(image::Mat,
     numOfPt = length(points) 
     colorPtr = convertColortoPtr(color)
 
-    ccall( (:polylines, "../libcv2"), Void, (Ptr{Void}, Ptr{Ptr{Void}}, Int, Bool, Ptr{Int}, Int, Int, Int), image.handle, cvPts, numOfPt, isClosed, colorPtr, thickness, lineType, shift)
+    ccall( (:polylines, "../libcv2"), Void, (Ptr{Void}, Ptr{Ptr{Void}}, Int,
+    Bool, Ptr{Int32}, Int, Int, Int), image.handle, cvPts, numOfPt, isClosed, colorPtr, thickness, lineType, shift)
 end
 
 function convertColortoPtr(color::(Int, Int, Int))
-    colorPtr = [color[1], color[2], color[3]]
+    r = convert(Int32, color[1])
+    g = convert(Int32, color[2])
+    b = convert(Int32, color[3])
+    colorPtr = [r, g, b]
     return colorPtr
 end
 
