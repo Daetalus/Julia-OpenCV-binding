@@ -48,6 +48,8 @@ function normarlizeT(array::Array{Int32, 1})
     return rArray
 end
 
+
+
 function calcHist(images::Array{Mat,},
                   channels::Array{Int, 1},
                   #Null, #mask
@@ -80,6 +82,21 @@ end
 function cvPoint(x::Int, y::Int)
     pt = cvPoint(ccall( (:setPoint, "../libcv2"), Ptr{Void}, (Int, Int), x, y))
     return pt
+end
+
+function blur(image::Mat,
+              size::(Int, Int),
+              anchor::cv2.Point=cv2.Point(-1, -1),
+              borderType::Int=0)
+    sizeX = convert(Int32, size[1])
+    sizeY = convert(Int32, size[2])
+    sizePtr = [sizeX, sizeY]
+
+    anchorPtr = cvPoint(anchor.x, anchor.y)
+    result = Mat(ccall( (:blur, "../libcv2"), Ptr{Void}, (Ptr{Void}, Ptr{Int32},
+    Ptr{Void}, Int), image.handle, sizePtr, anchorPtr.handle, borderType))
+
+    return result
 end
 
 function polylines(image::Mat,

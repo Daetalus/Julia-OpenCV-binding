@@ -7,6 +7,9 @@
 
 extern "C" cv::Point* setPoint(int x, int y);
 
+// C++: void blur( const Mat& src, Mat& dst, Size ksize, Point anchor=Point(-1,-1), int borderType=BORDER DEFAULT );
+extern "C" cv::Mat* blur(cv::Mat *img, int *size, cv::Point *anchor, int borderType);
+
 // C++: void polylines(Mat& img, const Point** pts, const int* npts, int ncontours, bool isClosed, const Scalar& color, int thickness=1, int lineType=8, int shift=0 )
 extern "C" void polylines(cv::Mat *img, cv::Point **pts, int npts, bool isClosed, int *color, int thickness, int lineType, int shift);
 

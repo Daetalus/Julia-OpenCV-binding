@@ -28,6 +28,14 @@ cv::Mat** split(const cv::Mat *src)
     return imageArray;
 }
 
+cv::Mat* blur(cv::Mat *img, int *size, cv::Point *anchor, int borderType)
+{
+    cv::Mat *result = new cv::Mat();
+    cv::blur(*img, *result, cv::Size(5, 5), *anchor, borderType);
+
+    return result;
+}
+
 void polylines(cv::Mat *img, cv::Point **pts, int npts, bool isClosed, int *color, int thickness, int lineType, int shift)
 {
     using namespace cv;
