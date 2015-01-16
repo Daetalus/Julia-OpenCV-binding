@@ -8,9 +8,9 @@ It is **not** ready for common use and **only work** for Linux now.
 Introduction
 ------------
 
-This OpenCV-Julia binding is try to port OpenCV API to Julia. It use the "**OpenCV way**". The "OpenCV way" means the wrapping will only use the language itself, without 3rd party tools. 
+This OpenCV-Julia binding is try to port OpenCV API to Julia. It use the "**OpenCV way**". The "OpenCV way" means the wrapping will only use the language itself, without 3rd party tools. Like official OpenCV-Python and OpenCV-Julia did.
 
-This binding take OpenCV-Python and OpenCV-Java as reference. It will more like OpenCV-Java. Such as map datatype manually, use Python generation tool to wrap functions.
+This binding take OpenCV-Python and OpenCV-Java as reference. It will more like OpenCV-Java. For example, map datatype manually, use Python generation tool to wrap functions.
 
 Goal
 ----
@@ -64,7 +64,7 @@ for i = 1:3
     # draw each hist, represent to a polyline
     cv2.polylines(histImage, pts, false, color[i])
 end
-         
+
 cv2.imshow("HistImage", histImage)
 cv2.waitKey(0)
 ```
@@ -74,7 +74,7 @@ output that generated in Julia by the binding:
 
 ![Hist](./doc/figures/hist_Julia.png)
 
-More information, please see `/doc/test_descritopns`(Actually, not much)
+More information, please see `/doc/test_descritopns`(Actually, not much for now)
 
 TODO
 ------
